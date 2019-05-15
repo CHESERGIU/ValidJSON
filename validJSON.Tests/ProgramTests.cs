@@ -20,6 +20,13 @@ namespace validJSON.Tests
             string console = "\"Text\"";
             Assert.Equal(result, Program.IsValidJSONString(console));
         }
-        
+        [Fact]
+        public void When_input_have_Chars_unicode_below_32_ASCII_control_characters()
+        {
+            bool result = false;
+            string console = "\\u0030\"";
+            Assert.Equal(result, Program.IsValidJSONString(console));
+        }
+
     }
 }
