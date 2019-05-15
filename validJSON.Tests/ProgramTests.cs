@@ -20,5 +20,6 @@ namespace validJSON.Tests
             string console = "\"Text\"";
             Assert.Equal(result, Program.IsValidJSONString(console));
         }
+        
     }
 }

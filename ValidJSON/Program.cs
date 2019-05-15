@@ -21,17 +21,11 @@ namespace ValidJSON
 
         public static bool IsValidJSONString(string console)
         {
-            char[] json = console.ToCharArray();            
-            int i;                      
-            int start = 0;            
-            
-            for (i = start; i < json.Length; i++)
+            char[] json = console.ToCharArray();  
+            if (json[(int)(0)] == '"' && json[(int)(json.Length - 1)] == '"')
             {
-                if (json[(int)(0)] == '"' && json[(int)(json.Length - 1)] == '"')
-                {
-                    return true;
-                }
-            }
+                return true;
+            }            
             return false;
         }
     }
