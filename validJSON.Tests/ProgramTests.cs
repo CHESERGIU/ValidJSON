@@ -9,10 +9,10 @@ namespace validJSON.Tests
         [Fact]
         public void Red_Tests()
         {
-            var result = "Valid";
-            char[] jsonString = null;
-            Program.IsValidJSONString(jsonString);
-            Assert.Equal(result, jsonString);
+            bool result = true;
+            string console = "Text";
+            
+            Assert.Equal(result, Program.IsValidJSONString(console));
         }
     }
 }

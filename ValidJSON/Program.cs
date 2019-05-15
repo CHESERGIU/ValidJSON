@@ -6,9 +6,8 @@ namespace ValidJSON
     {
         public static void Main(string[] args)
         {
-            string console = Console.ReadLine();            
-            char[] jsonString = console.ToCharArray();
-            var result = IsValidJSONString(jsonString);
+            string console = Console.ReadLine();
+            var result = IsValidJSONString(console);
             if (result == true)
             {
                 Console.WriteLine("Valid");
@@ -20,9 +19,23 @@ namespace ValidJSON
             Console.ReadLine();
         }
 
-        public static bool IsValidJSONString(char[] jsonString)
+        public static bool IsValidJSONString(string console)
         {
-            throw new NotImplementedException();
+            char[] json = console.ToCharArray();
+            bool success, done;
+            double i;          
+            success = true;
+            done = false;
+            double start = 0;            
+            
+            for (i = start + 1d; i < json.Length && !done && success; i = i + 1d)
+            {
+                if (json[(int)(0)] == '"' && json[(int)(json.Length - 1)] == '"')
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
