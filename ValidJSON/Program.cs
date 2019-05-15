@@ -21,9 +21,9 @@ namespace ValidJSON
 
         public static bool IsValidJSONString(string console)
         {
-            char[] json = console.ToCharArray();            
-            int i;                      
-            int start = 0; 
+            char[] json = console.ToCharArray();
+            int i;
+            int start = 0;
             int numberValue = 0;
             if (json[(int)(0)] == '"' && json[(int)(json.Length - 1)] == '"')
             {
@@ -31,10 +31,10 @@ namespace ValidJSON
                 {
                     if (!IsJSONChar(json[(int)(i)]))
                     {
-                        numberValue += 1;                        
+                        numberValue += 1;
                     }
                 }
-                if(numberValue == json.Length)
+                if (numberValue == json.Length)
                     return true;
             }
             return false;
@@ -53,7 +53,6 @@ namespace ValidJSON
             {
                 isValid = false;
             }
-
             return isValid;
         }
     }
