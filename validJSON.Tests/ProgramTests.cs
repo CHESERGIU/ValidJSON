@@ -1,4 +1,5 @@
 using System;
+using ValidJSON;
 using Xunit;
 
 namespace validJSON.Tests
@@ -6,9 +7,12 @@ namespace validJSON.Tests
     public class ProgramTests
     {
         [Fact]
-        public void Test1()
+        public void Red_Tests()
         {
-
+            var result = "Valid";
+            char[] jsonString = null;
+            Program.IsValidJSONString(jsonString);
+            Assert.Equal(result, jsonString);
         }
     }
 }
