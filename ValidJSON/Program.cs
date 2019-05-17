@@ -29,7 +29,7 @@ namespace ValidJSON
             {
                 i = ValidChar(json, start, ref numberValue);
                 if (numberValue == json.Length)
-                    return true;
+                    return true;                
             }
             return false;
         }
@@ -39,16 +39,29 @@ namespace ValidJSON
             int i;
             for (i = start; i < json.Length; i++)
             {
-                if (!IsJSONChar(json[(int)(i)]))
+                if (!IsNotAllowedChar(json[(int)(i)]))
                 {
                     numberValue += 1;
-                }
+                    if (i != 0 && i < json.Length - 1)
+                    {
+                        if (json[(int)(i)] == '\"'
+                            || json[(int)(i)] == '\\'
+                            || json[(int)(i)] == '/'
+                            || json[(int)(i)] == '\b'
+                            || json[(int)(i)] == '\f'
+                            || json[(int)(i)] == '\n'
+                            || json[(int)(i)] == '\r'
+                            || json[(int)(i)] == '\t')
+                        {
+                            numberValue += 1; 
+                        }
+                    }
+                }                
             }
-
             return i;
         }
 
-        private static bool IsJSONChar(char v)
+        private static bool IsNotAllowedChar(char v)
         {
             int cnr;
             bool isValid;

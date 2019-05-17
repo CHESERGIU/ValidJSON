@@ -23,8 +23,8 @@ namespace validJSON.Tests
         [Fact]
         public void When_input_have_Chars_unicode_below_32_ASCII_control_characters()
         {
-            bool result = true;
-            string console = "\"\u0030\"";
+            bool result = false;
+            string console = "\"\\u0030\"";
             Assert.Equal(result, Program.IsValidJSONString(console));
         }
         [Fact]
@@ -32,6 +32,13 @@ namespace validJSON.Tests
         {
             bool result = false;
             string console = "\\Test\"";
+            Assert.Equal(result, Program.IsValidJSONString(console));
+        }
+        [Fact]
+        public void When_input_have_middle_quatation_marks_control_characters()
+        {
+            bool result = false;
+            string console = "\"Te\"st\""; 
             Assert.Equal(result, Program.IsValidJSONString(console));
         }
 
