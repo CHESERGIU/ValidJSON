@@ -41,6 +41,13 @@ namespace validJSON.Tests
             string console = "\"Te\"st\""; 
             Assert.Equal(result, Program.IsValidJSONString(console));
         }
+        [Fact]
+        public void When_input_have_Unicode__special_chars__another_line_control_characters()
+        {
+            bool result = true;
+            string console = "\"Test\\\\u0097\\nAnother line\"";;
+            Assert.Equal(result, Program.IsValidJSONString(console));
+        }
 
     }
 }
