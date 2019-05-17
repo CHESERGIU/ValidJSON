@@ -48,6 +48,19 @@ namespace validJSON.Tests
             string console = "\"Test\\\\u0097\\nAnother line\"";;
             Assert.Equal(result, Program.IsValidJSONString(console));
         }
-
+        [Fact]
+        public void When_input_have_only_one_side_quatations()
+        {
+            bool result = false;
+            string console = "\"Test"; ;
+            Assert.Equal(result, Program.IsValidJSONString(console));
+        }        
+        [Fact]
+        public void When_input_have_only_one_side_quatations_and_blackslash()
+        {
+            bool result = false;
+            string console = "\"\\Test\""; ;
+            Assert.Equal(result, Program.IsValidJSONString(console));
+        }
     }
 }
