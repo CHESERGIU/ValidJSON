@@ -49,17 +49,31 @@ namespace validJSON.Tests
             Assert.Equal(result, Program.IsValidJsonString(console));
         }
         [Fact]
-        public void When_input_have_only_one_side_quatations()
+        public void When_input_have_only_one_side_quotations()
         {
             bool result = false;
             string console = "\"Test"; ;
             Assert.Equal(result, Program.IsValidJsonString(console));
         }        
         [Fact]
-        public void When_input_have_only_one_side_quatations_and_blackslash()
+        public void When_input_have_only_one_side_quotations_and_backslash()
         {
             bool result = false;
             string console = "\"\\Test\""; ;
+            Assert.Equal(result, Program.IsValidJsonString(console));
+        }
+        [Fact]
+        public void When_input_have_only_one_quotes()
+        {
+            bool result = false;
+            string console = "\""; ;
+            Assert.Equal(result, Program.IsValidJsonString(console));
+        }
+        [Fact]
+        public void When_input_have_only_different_unicode_chars()
+        {
+            bool result = true;
+            string console = "\"Rom\\\\u00E2\\nia\""; ;
             Assert.Equal(result, Program.IsValidJsonString(console));
         }
     }
