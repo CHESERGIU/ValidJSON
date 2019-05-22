@@ -12,19 +12,17 @@ namespace ValidJSON
 
         public static bool IsValidJsonString(string console)
         {
-            char[] json = console.ToCharArray();            
-            int i;                      
-            int start = 0; 
-            int numberValue = 0;
-            if (json[(int) (0)] != '"' || json[(int) (json.Length - 1)] != '"') return false;
-            i = ValidChar(json, start, ref numberValue);
+            var json = console.ToCharArray();  
+            var numberValue = 0;
+            if (json[(int) 0] != '"' || json[(int) (json.Length - 1)] != '"') return false;
+            var i = ValidChar(json, ref numberValue);
             return numberValue == json.Length;
         }
 
-        private static int ValidChar(char[] json, int start, ref int numberValue)
+        private static int ValidChar(char[] json, ref int numberValue)
         {
             int i, j;
-            
+            const int start = 0;
             for (i = start; i < json.Length; i++)
             {
                 if (IsNotAllowedChar(json[i])) continue;
