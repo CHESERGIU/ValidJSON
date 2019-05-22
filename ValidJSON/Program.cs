@@ -16,13 +16,9 @@ namespace ValidJSON
             int i;                      
             int start = 0; 
             int numberValue = 0;
-            if (json[(int)(0)] == '"' && json[(int)(json.Length - 1)] == '"')
-            {
-                i = ValidChar(json, start, ref numberValue);
-                if (numberValue == json.Length)
-                    return true;                
-            }
-            return false;
+            if (json[(int) (0)] != '"' || json[(int) (json.Length - 1)] != '"') return false;
+            i = ValidChar(json, start, ref numberValue);
+            return numberValue == json.Length;
         }
 
         private static int ValidChar(char[] json, int start, ref int numberValue)
@@ -55,7 +51,7 @@ namespace ValidJSON
 
         private static char UnicodeChars(char[] json, int i, int j)
         {
-            char c = json[i + j + 1];
+            var c = json[i + j + 1];
             if (CharacterIsNumberCharacterInBase(c, 16d) || c == 'a' || c == 'b' || c == 'c' || c == 'd' || c == 'e' || c == 'f')
             {
             }
@@ -78,29 +74,20 @@ namespace ValidJSON
 
         private static bool CharacterIsNumberCharacterInBase(char c, double v)
         {
-            char[] numberTable;
             double i;
-            bool found;
 
-            numberTable = GetDigitCharacterTable();
-            found = false;
+            var numberTable = GetDigitCharacterTable();
+            var found = false;
 
-            for (i = 0d; i < v; i = i + 1d)
-            {
-                if (numberTable[(int)i] == c)
-                {
+            for (i = 0d; i < v; i += 1d)
+                if (numberTable[(int) i] == c)
                     found = true;
-                }
-            }
 
             return found;
         }
         public static char[] GetDigitCharacterTable()
         {
-            char[] numberTable;
-
-            numberTable = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
-
+            var numberTable = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
             return numberTable;
         }
         private static bool IsNotAllowedChar(char c)
