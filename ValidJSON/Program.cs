@@ -6,14 +6,11 @@ namespace ValidJSON
     {
         public static void Main(string[] args)
         {
-            if (IsValidJSONString(Console.ReadLine()) == true)
-                Console.WriteLine("Valid");
-            else
-                Console.WriteLine("Invalid");
+            Console.WriteLine(IsValidJsonString(Console.ReadLine()) == true ? "Valid" : "Invalid");
             Console.ReadLine();
         }
 
-        public static bool IsValidJSONString(string console)
+        public static bool IsValidJsonString(string console)
         {
             char[] json = console.ToCharArray();            
             int i;                      
@@ -34,38 +31,24 @@ namespace ValidJSON
             
             for (i = start; i < json.Length; i++)
             {
-                if (!IsNotAllowedChar(json[i]))
-                {
+                if (IsNotAllowedChar(json[i])) continue;
+                numberValue += 1;
+                if (i == 0 || i >= json.Length - 1) continue;
+                if (EscapeSequence(json, i))
                     numberValue += 1;
-                    if (i != 0 && i < json.Length - 1)
-                    {
-                        if (EscapeSequence(json, i))
-                        {
-                            numberValue += 1;
-                        }
-                        else if (json[i] == 'u')
-                        {
-                            j = UnicodeValue(json, ref numberValue, ref i);
-                        }
-                    }
-                }
+                else if (json[i] == 'u') j = UnicodeValue(json, ref numberValue, ref i);
             }
             return i;
         }
 
         private static int UnicodeValue(char[] json, ref int numberValue, ref int i)
         {
-            int j = 0;
-            Char c;
-            if (i + 4 < json.Length)
-            {
-                for (j = 0; j < 4; j++)
-                {
-                    c = UnicodeChars(json, i, j);
-                }
-                numberValue = numberValue + 1;
-                i = i + 4;
-            }
+            var j = 0;
+            char c;
+            if (i + 4 >= json.Length) return j;
+            for (j = 0; j < 4; j++) c = UnicodeChars(json, i, j);
+            numberValue += 1;
+            i += 4;
 
             return j;
         }
@@ -104,7 +87,7 @@ namespace ValidJSON
 
             for (i = 0d; i < v; i = i + 1d)
             {
-                if (numberTable[(int)(i)] == c)
+                if (numberTable[(int)i] == c)
                 {
                     found = true;
                 }
