@@ -11,9 +11,7 @@ namespace ValidJSON
         }
         public static bool IsValidJsonString(string input)
         {
-            if (input.Length < 2)return false;
-            if (!IsBetweenQuotes(input))return false;
-            return ValidChar(input);
+            return input.Length >= 2 && (IsBetweenQuotes(input) && ValidChar(input));
         }
         private static bool ValidChar(string json)
         {
@@ -29,8 +27,7 @@ namespace ValidJSON
                     i += 4;
                 }
             }
-            if (count != json.Length) return false;
-            return true;
+            return count == json.Length;
         }
         private static bool IsBetweenQuotes(string json) => json[0] == '"' && json[json.Length - 1] == '"';
         private static bool IsNotAllowedChar(char c) => (c >= 0d && c < 32d);
