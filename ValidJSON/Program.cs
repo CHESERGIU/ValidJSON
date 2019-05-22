@@ -9,15 +9,13 @@ namespace ValidJSON
             Console.WriteLine(IsValidJsonString(Console.ReadLine()) == true ? "Valid" : "Invalid");
             Console.ReadLine();
         }
-
         public static bool IsValidJsonString(string input)
         {
             if (input.Length < 2)return false;
             if (!IsBetweenQuotes(input))return false;
-            return ValidChar(input) == input.Length;
+            return ValidChar(input);
         }
-
-        private static int ValidChar(string json)
+        private static bool ValidChar(string json)
         {
             int i, count = 0;
             for (i = 0; i < json.Length; i++)
@@ -31,21 +29,18 @@ namespace ValidJSON
                     i += 4;
                 }
             }
-            return count;
+            if (count != json.Length) return false;
+            return true;
         }
-
         private static bool IsBetweenQuotes(string json) => json[0] == '"' && json[json.Length - 1] == '"';
-
         private static bool IsNotAllowedChar(char c) => (c >= 0d && c < 32d);
-
         private static bool GetValueBetweenQuotes(string json, int i) => i == 0 || i >= json.Length - 1;
-
         private static bool EscapeSequenceU(string json, int i) => json[i] == 'u' && i + 4 < json.Length;
-
         private static bool EscapeSequence(string json, int i)
         {
             return json[i] == '\"'|| json[i] == '\\'|| json[i] == '/'|| json[i] == '\b'
                 || json[i] == '\f'|| json[i] == '\n'|| json[i] == '\r'|| json[i] == '\t';
         }
+
     }
 }
