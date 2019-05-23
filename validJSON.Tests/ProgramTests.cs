@@ -45,35 +45,49 @@ namespace validJSON.Tests
         public void When_input_have_Unicode__special_chars__another_line_control_characters()
         {
             bool result = true;
-            string console = "\"Test\\\\u0097\\nAnother line\"";;
+            string console = "\"Test\\\\u0097\\nAnother line\"";
             Assert.Equal(result, Program.IsValidJsonString(console));
         }
         [Fact]
         public void When_input_have_only_one_side_quotations()
         {
             bool result = false;
-            string console = "\"Test"; ;
+            string console = "\"Test"; 
             Assert.Equal(result, Program.IsValidJsonString(console));
         }        
         [Fact]
         public void When_input_have_only_one_side_quotations_and_backslash()
         {
             bool result = false;
-            string console = "\"\\Test\""; ;
+            string console = "\"\\Test\""; 
             Assert.Equal(result, Program.IsValidJsonString(console));
         }
         [Fact]
         public void When_input_have_only_one_quotes()
         {
             bool result = false;
-            string console = "\""; ;
+            string console = "\""; 
             Assert.Equal(result, Program.IsValidJsonString(console));
         }
         [Fact]
         public void When_input_have_only_different_unicode_chars()
         {
             bool result = true;
-            string console = "\"Rom\\\\u00E2\\nia\""; ;
+            string console = "\"Rom\\\\u00E2\\nia\""; 
+            Assert.Equal(result, Program.IsValidJsonString(console));
+        }
+        [Fact]
+        public void When_input_have_differently_unicode_chars()
+        {
+            bool result = true;
+            string console = "\"\\\\u0306\\\\\\u01FD\\\\\\u03B2\\\\\\uD8FF\\\\\\uDCFF\\\""; 
+            Assert.Equal(result, Program.IsValidJsonString(console));
+        }
+        [Fact]
+        public void When_input_have_differently_Escape_sequence_characters()
+        {
+            bool result = true;
+            string console = "\"\tHello\r\n\tWorld!\"";
             Assert.Equal(result, Program.IsValidJsonString(console));
         }
     }

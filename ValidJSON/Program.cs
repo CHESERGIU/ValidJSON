@@ -9,40 +9,42 @@ namespace ValidJSON
             Console.WriteLine(IsValidJsonString(Console.ReadLine()) == true ? "Valid" : "Invalid");
             Console.ReadLine();
         }
-        public static bool IsValidJsonString(string input) => input.Length >= 2 && (IsBetweenQuotes(input) && ValidChar(input));
+        public static bool IsValidJsonString(string input) => IsBetweenQuotes(input) && ValidString(input);
 
-        private static bool ValidChar(string json) => Count(json) == json.Length;
-
-        private static int Count(string json)
+        private static bool ValidString(string json)
         {
-            int i, count = 0;
+            int i, index = 0;
             for (i = 0; i < json.Length; i++)
             {
-                if (!IsNotAllowedChar(json[i])) count += 1;
-                if (GetValueBetweenQuotes(json, i)) continue;
-                if (EscapeSequence(json, i)) count += 1;
-                else if (EscapeSequenceU(json, i))
+                if (!IsAllowedChar(json[i])) index += 1;
+                if (IsEscapeSequence(json, i)) index += 1;
+                if (IsUnicodeEscapeSequence(json, i))
                 {
-                    count += 1;
+                    index += 1;
                     i += 4;
                 }
             }
 
-            return count;
+            return index == json.Length;
         }
 
-        private static bool IsBetweenQuotes(string json) => json[0] == '"' && json[json.Length - 1] == '"';
+        private static bool IsBetweenQuotes(string json) => json.Length >= 2 && json[0] == '"' && json[json.Length - 1] == '"';
 
-        private static bool IsNotAllowedChar(char c) => (c >= 0d && c < 32d);
+        private static bool IsAllowedChar(char c) => c >= 0d && c < 32d;
 
-        private static bool GetValueBetweenQuotes(string json, int i) => i == 0 || i >= json.Length - 1;
+        private static bool IsUnicodeEscapeSequence(string json, int i) => json[i] == 'u' && i + 4 < json.Length;
 
-        private static bool EscapeSequenceU(string json, int i) => json[i] == 'u' && i + 4 < json.Length;
-
-        private static bool EscapeSequence(string json, int i)
+        private static bool IsEscapeSequence(string json, int i)
         {
-            return json[i] == '\"'|| json[i] == '\\'|| json[i] == '/'|| json[i] == '\b'
-                || json[i] == '\f'|| json[i] == '\n'|| json[i] == '\r'|| json[i] == '\t';
+            return i != 0 && i != json.Length - 1
+                          && json[i] == '\"'
+                   || json[i] == '/'
+                   || json[i] == '\b'
+                   || json[i] == '\f'
+                   || json[i] == '\n'
+                   || json[i] == '\r'
+                   || json[i] == '\t'
+                   || json[i] == '\\';
         }
 
     }
