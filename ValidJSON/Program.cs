@@ -34,18 +34,6 @@ namespace ValidJSON
 
         private static bool IsUnicodeEscapeSequence(string json, int i) => json[i] == 'u' && i + 4 < json.Length;
 
-        private static bool IsEscapeSequence(string json, int i)
-        {
-            return i != 0 && i != json.Length - 1
-                          && json[i] == '\"'
-                   || json[i] == '/'
-                   || json[i] == '\b'
-                   || json[i] == '\f'
-                   || json[i] == '\n'
-                   || json[i] == '\r'
-                   || json[i] == '\t'
-                   || json[i] == '\\';
-        }
-
+        private static bool IsEscapeSequence(string json, int i) => i != 0 && i != json.Length - 1 && "\\/\b\f\n\r\t\"".Contains(json[i]);
     }
 }
