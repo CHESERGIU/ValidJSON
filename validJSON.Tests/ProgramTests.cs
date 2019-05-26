@@ -45,7 +45,7 @@ namespace validJSON.Tests
         public void When_input_have_Unicode__special_chars__another_line_control_characters()
         {
             bool result = true;
-            string console = "\"Test\\\\u0097\\\nAnother line\"";
+            string console = "\"Test\\\\u0097\\nAnother line\"";
             Assert.Equal(result, Program.IsValidJsonString(console));
         }
         [Fact]
